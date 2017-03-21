@@ -52,6 +52,8 @@ AudioInputAnalog         adc1(A1);        //xy=144,119
 AudioAnalyzeFFT1024      fft1024_1;       //xy=498,64
 AudioConnection          patchCord1(adc1, fft1024_1);
 
+int lastModeButtonValue = HIGH;
+int showMode = 1;
 const int m_amountOfRows = 256;
 const int m_amountOfColumns = 90; //128;  //Number of outputs per row
 unsigned int logGen1024[m_amountOfColumns][2] = {0}; //Linear1024 -> Log64 mapping
@@ -254,8 +256,20 @@ Laser laser(5);
 
 void setup()
 {  
+  pinMode(2, INPUT_PULLUP);
   laser.init();
   initAudio();
+}
+
+void handleModeButton(){
+  int currentModeButtonValue = digitalRead(2);
+   if(currentModeButtonValue != lastModeButtonValue && currentModeButtonValue == LOW){
+    ++showMode;
+    if(showMode % 4 == 0){
+      showMode = 1;
+    }
+  }
+   lastModeButtonValue = currentModeButtonValue;
 }
 
 void fftLoop()
@@ -264,12 +278,13 @@ void fftLoop()
   int count = 0;
   while (1)
   { 
+    handleModeButton();
     updateFFT();
     count++;
     laser.setScale(1.);
     laser.setOffset(0,0);
 
-    if (count % 2000 > 1000) 
+    if (showMode == 1) 
     { 
       // circle analyzer   
       m_decay = 0.15;
@@ -292,7 +307,8 @@ void fftLoop()
       laser.sendto(firstX,firstY);
       rotate += 1;
       laser.off();
-    } else 
+    } 
+    if (showMode > 1) 
     {
       // normal analyzer
       m_decay = 0.5;
@@ -306,7 +322,7 @@ void fftLoop()
         pos += step;
       }
       laser.off();
-      if (count % 2000 > 500) 
+      if ( showMode > 2) 
       {
         laser.sendto(0,0);
         laser.on();
