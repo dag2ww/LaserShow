@@ -16,16 +16,16 @@ void setup()
 }
 
 
-void letterEffect()
+void zaczynamy()
 {  
-  String dyn = "AZAZAYBY";
-  String lu  = "DELTAFLO";
+  String dyn = "AZAZAYBYX";
+  String lu  = "ZACZYNAMY";
   int w = Drawing::stringAdvance(lu);
   laser.setScale(3048./w);
   laser.setOffset(2048,2048);
   for (int i = 0;i<35;i++) {
     Drawing::drawString(dyn, -w/2,0,4);
-    for (int i = 0;i<8;i++){ 
+    for (int i = 0;i<9;i++){ 
       if (lu[i]>dyn[i]) dyn[i]++;
       if (lu[i]<dyn[i]) dyn[i]--;
     }
@@ -39,8 +39,8 @@ void letterEffect()
   laser.resetClipArea();
 }
 
-void presents() {
-  String str = "PRESENTS";
+void urodzinki() {
+  String str = "URODZINOWY";
   int w = Drawing::stringAdvance(str);
   laser.setScale(3048./w);
   laser.setOffset(2048,2048);
@@ -74,7 +74,7 @@ void arduino()
 
 void laserShow()
 {
-  String str = "LASER";
+  String str = "POKAZ";
   int w = Drawing::stringAdvance(str);
   int count = 360/4;
   int angle = 0;
@@ -90,7 +90,7 @@ void laserShow()
     world = Matrix3::rotateY(angle % 360);
     laser.setMatrix(world);
     laser.setOffset(1024,1024 - 600);
-    Drawing::drawString("SHOW",-w/2,-500, 1);
+    Drawing::drawString("LASEROWY",-w/2,-500, 1);
     angle += 8;
   }
   laser.setEnable3D(false);
@@ -266,19 +266,19 @@ void drawArduino3D()
 
 void whatAbout3D()
 {
-  int w1 = Drawing::stringAdvance("WHAT");
-  int w2 = Drawing::stringAdvance("ABOUT");
-  int w3 = Drawing::stringAdvance("3D");
+  int w1 = Drawing::stringAdvance("A TERAZ");
+  int w2 = Drawing::stringAdvance("RUCHOMA");
+  int w3 = Drawing::stringAdvance("KOSTKA");
   long centerX, centerY, w,h;
   Drawing::calcObjectBox(draw_question, sizeof(draw_question)/4, centerX, centerY, w, h);
 
   laser.setOffset(2048,2048);
   laser.setScale(0.5);
-  for (int i = 0; i<50;i++) Drawing::drawString("WHAT",-w1/2, SIN((i*10) % 360)/100., 1);
+  for (int i = 0; i<50;i++) Drawing::drawString("A TERAZ",-w1/2, SIN((i*10) % 360)/100., 1);
   laser.setScale(0.5);
-  for (int i = 0; i<50;i++) Drawing::drawString("ABOUT", -w2/2 + SIN((i*10) % 360)/100., 0, 1);
+  for (int i = 0; i<50;i++) Drawing::drawString("RUCHOMA", -w2/2 + SIN((i*10) % 360)/100., 0, 1);
   laser.setScale(1.);
-  for (int i = 0; i<120;i++) Drawing::drawString("3D", -w3/2 + SIN((i*4) % 360)/100., COS((i*4) % 360)/100., 1);
+  for (int i = 0; i<120;i++) Drawing::drawString("KOSTKA", -w3/2 + SIN((i*4) % 360)/100., COS((i*4) % 360)/100., 1);
   float scale = 0;
   for (int i = 0;i<200;i++) {
     laser.setScale(scale);
@@ -290,7 +290,7 @@ void whatAbout3D()
 // arduino + heart
 void drawWeLove()
 {
-  int w1 = Drawing::stringAdvance("ARDUINO");
+  int w1 = Drawing::stringAdvance("HANIA");
   long centerX, centerY, w,h;
   Drawing::calcObjectBox(draw_heart, sizeof(draw_heart)/4, centerX, centerY, w, h);
 
@@ -374,23 +374,20 @@ void drawScroller(String s, float scale = 0.5, int offsetY = 2048, int speed = 1
 
 void loop() {
   countDown();
-  letterEffect();
-  presents();
-  arduino();
+  zaczynamy();
+  urodzinki();
   laserShow();
   drawPlane();
   drawLogo();
-  drawScroller(String("THIS PROJECT IS AVAILABLE ON INSTRUCTABLES.COM"),0.5,2048,100);
+  drawScroller(String("WSZYSTKIEGO NAJLEPSZEGO Z OKAZJI 8 URODZIN :) "),0.5,2048,100);
   drawWeLove();
-  drawArduino2DRotate();
   whatAbout3D();
   rotateCube(400);
   drawBike();
   globe(200);
-  drawArduino3D();
-  drawScroller(String("SOURCE CODE AVAILABLE ON GITHUB!"),0.25,2048,100);
+  drawScroller(String("A TERAZ TEST!"),0.25,2048,100);
 
-//  drawObjects();
+  drawObjects();
 //  jumpingText();
 }
 
