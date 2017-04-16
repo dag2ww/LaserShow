@@ -43,7 +43,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // Enable this if you have my patched version of the Audio library
 // (get patched version here: https://github.com/florianlink/Audio)
-//#define PATCHED_AUDIO
+#define PATCHED_AUDIO
 
 #include <analyze_fft1024.h>
 #include <input_adc.h>
@@ -250,6 +250,9 @@ void initAudio()
 
 #include "Laser.h"
 #include "Drawing.h"
+#include "ocado1.h"
+#include "ocado_groc.h"
+#include "square_test.h"
 
 // Create laser instance (with laser pointer connected to digital pin 5)
 Laser laser(5);
@@ -311,7 +314,7 @@ void fftLoop()
     if (showMode > 1) 
     {
       // normal analyzer
-      m_decay = 0.5;
+      m_decay = 0.8;
       long step = 4096/m_amountOfColumns;
       long pos = 0;
       laser.sendto(0,0);
@@ -360,6 +363,20 @@ void laserShow()
     angle += 8;
   }
   laser.setEnable3D(false);
+
+    laser.setOffset(100,100);
+      laser.setScale(1);
+for (int i = 0;i<count;i++) {
+
+      Drawing::drawObject(ocado_groc, sizeof(ocado_groc)/4);
+}
+
+  
+  laser.setOffset(1024,1024);
+  laser.setScale(0.5);
+  for (int i = 0;i<count;i++) Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
+
+  
 }
 
 void loop() {

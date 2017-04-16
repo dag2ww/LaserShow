@@ -6,6 +6,8 @@
 #include "Cube.h"
 #include "Objects.h"
 #include "Logo.h"
+#include "square_test.h"
+#include "ocado1.h"
 
 // Create laser instance (with laser pointer connected to digital pin 5)
 Laser laser(5);
@@ -78,13 +80,13 @@ void laserShow()
   int w = Drawing::stringAdvance(str);
   int count = 360/4;
   int angle = 0;
-  laser.setScale(0.5);
+  laser.setScale(0.25);
   for (int i = 0;i<count;i++) {
     Matrix3 world;
     laser.setEnable3D(true);
     world = Matrix3::rotateX(angle % 360);
     laser.setMatrix(world);
-    laser.setZDist(4000);
+    laser.setZDist(8000);
     laser.setOffset(1024,1024 + 600);
     Drawing::drawString(str,-w/2,-500, 1);
     world = Matrix3::rotateY(angle % 360);
@@ -126,7 +128,7 @@ void circle() {
   const int scale = 12;
   laser.sendto(SIN(0)/scale, COS(0)/scale);
   laser.on();
-  for (int r = 5;r<=360;r+=5)
+  for (int r = 2;r<=360;r+=2)
   {    
     laser.sendto(SIN(r)/scale, COS(r)/scale);
   }
@@ -139,15 +141,16 @@ void countDown() {
   laser.setOffset(2048,2048);
   int center = Drawing::advance('9');
   for (char j = '9';j>'0';j--) {
-    float scale = 0.0;
-    float step = 0.01;
+    //float scale = 0.0;
+    //float step = 0.01;
     for (int i = 0;i<40;i++) {
-      laser.setScale(1);
+      //laser.setScale(1);
       circle();
-      laser.setScale(scale);
-      Drawing::drawLetter(j, -center/3, -center*2/3 + 100);   
-      scale += step;
-      step += 0.002;
+      
+      //laser.setScale(scale);
+      //Drawing::drawLetter(j, -center/3, -center*2/3 + 100);   
+      //scale += step;
+      //step += 0.002;
     }
   }
 }
@@ -277,8 +280,31 @@ void whatAbout3D()
   for (int i = 0; i<50;i++) Drawing::drawString("A TERAZ",-w1/2, SIN((i*10) % 360)/100., 1);
   laser.setScale(0.5);
   for (int i = 0; i<50;i++) Drawing::drawString("RUCHOMA", -w2/2 + SIN((i*10) % 360)/100., 0, 1);
-  laser.setScale(1.);
+  laser.setScale(0.5);
   for (int i = 0; i<120;i++) Drawing::drawString("KOSTKA", -w3/2 + SIN((i*4) % 360)/100., COS((i*4) % 360)/100., 1);
+  float scale = 0;
+  for (int i = 0;i<200;i++) {
+    laser.setScale(scale);
+    Drawing::drawObject(draw_question, sizeof(draw_question)/4, -centerX, -centerY);
+    scale += 0.02;
+  }
+}
+
+void otherDrawings()
+{
+  int w1 = Drawing::stringAdvance("A TERAZ");
+  int w2 = Drawing::stringAdvance("INNE");
+  int w3 = Drawing::stringAdvance("OBRAZKI");
+  long centerX, centerY, w,h;
+  Drawing::calcObjectBox(draw_question, sizeof(draw_question)/4, centerX, centerY, w, h);
+
+  laser.setOffset(2048,2048);
+  laser.setScale(0.5);
+  for (int i = 0; i<50;i++) Drawing::drawString("A TERAZ",-w1/2, SIN((i*10) % 360)/100., 1);
+  laser.setScale(0.5);
+  for (int i = 0; i<50;i++) Drawing::drawString("INNE", -w2/2 + SIN((i*10) % 360)/100., 0, 1);
+  laser.setScale(0.5);
+  for (int i = 0; i<120;i++) Drawing::drawString("OBRAZKI", -w3/2 + SIN((i*4) % 360)/100., COS((i*4) % 360)/100., 1);
   float scale = 0;
   for (int i = 0;i<200;i++) {
     laser.setScale(scale);
@@ -300,7 +326,7 @@ void drawWeLove()
     laser.setMaxMove(maxMove);
     maxMove += 200;
     laser.setScale(0.4);
-    Drawing::drawString("ARDUINO",-w1/2, SIN((i*10) % 360)/100.);
+    Drawing::drawString("HANIA",-w1/2, SIN((i*10) % 360)/100.);
     if (i>100) {
       laser.resetMaxMove();
       laser.setScale(2 + SIN((i*10)%360) / 10000.);
@@ -317,12 +343,18 @@ void drawWeLove()
 void drawObjects()
 {
   int count = 100;
-  laser.setScale(2);
-  laser.setOffset(0,0);
-
-  for (int i = 0;i<count;i++) Drawing::drawObject(draw_island, sizeof(draw_island)/4);
-  for (int i = 0;i<count;i++) Drawing::drawObject(draw_glasses, sizeof(draw_glasses)/4);
-  for (int i = 0;i<count;i++) Drawing::drawObject(draw_smoking, sizeof(draw_smoking)/4);
+  //laser.setScale(2);
+  //laser.setOffset(0,0);
+  //for (int i = 0;i<count;i++) Drawing::drawObject(draw_island, sizeof(draw_island)/4);
+  //for (int i = 0;i<count;i++) Drawing::drawObject(draw_glasses, sizeof(draw_glasses)/4);
+  //for (int i = 0;i<count;i++) Drawing::drawObject(draw_smoking, sizeof(draw_smoking)/4);
+  laser.setOffset(1024,1024);
+  laser.setScale(0.5);
+  for (int i = 0;i<count*200;i++) Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
+  laser.setOffset(100,100);
+  laser.setScale(0.75);
+  for (int i = 0;i<count*20;i++) Drawing::drawObject(draw_ocado1, sizeof(draw_ocado1)/4); 
+  
 }
 
 // draws text as scroller from right to left
@@ -374,19 +406,9 @@ void drawScroller(String s, float scale = 0.5, int offsetY = 2048, int speed = 1
 
 void loop() {
   countDown();
-  zaczynamy();
-  urodzinki();
-  laserShow();
-  drawPlane();
-  drawLogo();
-  drawScroller(String("WSZYSTKIEGO NAJLEPSZEGO Z OKAZJI 8 URODZIN :) "),0.5,2048,100);
-  drawWeLove();
-  whatAbout3D();
-  rotateCube(400);
-  drawBike();
-  globe(200);
-  drawScroller(String("A TERAZ TEST!"),0.25,2048,100);
-
+  drawScroller(String("WSZYSTKIEGO NAJLEPSZEGO Z OKAZJI 8 URODZINEK !"),0.5,2048,100);
+  //globe(200);
+  //drawScroller(String("A TERAZ TEST!"),0.25,2048,100);
   drawObjects();
 //  jumpingText();
 }
