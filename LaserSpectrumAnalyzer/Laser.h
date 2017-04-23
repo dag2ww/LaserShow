@@ -11,16 +11,16 @@
 // defines the granularity of the line interpolation. 64 means that each line is split into steps of 64 pixels in the longer direction.
 // setting smaller values will slow down the rendering but will cause more linearity in the galvo movement,
 // setting bigger values will cause faster rendering, but lines will not be straight anymore.
-#define LASER_QUALITY 16
+// #define LASER_QUALITY 4 - defined now by variable depending on show mode
 
 // Defines how long the galvos wait for the on/off toggling of the laser pointer (in microseconds), this will depend on your laser pointer.
-#define LASER_TOGGLE_DELAY 500
+#define LASER_TOGGLE_DELAY 400
 // Defines how long the galvos wait at the end of a line (currently only used for the 3D cube rendering, in microseconds).
 #define LASER_LINE_END_DELAY 200
 // Defines the delay the laser waits after reaching a given position (in microseconds).
-#define LASER_END_DELAY 5
+#define LASER_END_DELAY 2
 // Defines the delay after each laser movement (used when interpolating lines, in microseconds), if not defines, 0 is used
-#define LASER_MOVE_DELAY 5
+#define LASER_MOVE_DELAY 1
 
 // -- The following flags can be used to rotate/flip the output without changing the DAC wiring, just uncomment the desired swap/flip
 // define this to swap X and Y on the DAC
@@ -29,7 +29,6 @@
 #define LASER_FLIP_X
 // define this to flip along the y axis
 //#define LASER_FLIP_Y
-
 //! Encapsulates the laser movement and on/off state.
 class Laser
 {
@@ -56,6 +55,8 @@ public:
   
   void setScale(float scale);
   void setOffset(long offsetX, long offsetY);
+
+  void setLaserQuality(int quality);
   
   void resetClipArea(); 
   void setClipArea(long x, long y, long x1, long y1);
@@ -68,7 +69,6 @@ public:
   void setEnable3D(bool flag) { _enable3D = flag; }
   void setMatrix(const Matrix3& matrix) { _matrix = matrix; }
   void setZDist(long dist) { _zDist = dist; }
-
 private:
   //! send X/Y to DAC
   void sendToDAC(int x, int y);
@@ -81,6 +81,8 @@ private:
   int _laserPin;
 
   FIXPT _quality;
+
+  int laserQuality = 4;
 
   long _x;
   long _y;

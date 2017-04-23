@@ -7,7 +7,8 @@
 #include "Objects.h"
 #include "Logo.h"
 #include "square_test.h"
-#include "ocado1.h"
+#include "ildatest_format1.h"
+#include "greg_ok2.h"
 
 // Create laser instance (with laser pointer connected to digital pin 5)
 Laser laser(5);
@@ -350,10 +351,13 @@ void drawObjects()
   //for (int i = 0;i<count;i++) Drawing::drawObject(draw_smoking, sizeof(draw_smoking)/4);
   laser.setOffset(1024,1024);
   laser.setScale(0.5);
-  for (int i = 0;i<count*200;i++) Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
-  laser.setOffset(100,100);
-  laser.setScale(0.75);
-  for (int i = 0;i<count*20;i++) Drawing::drawObject(draw_ocado1, sizeof(draw_ocado1)/4); 
+  for (int i = 0;i<count*20;i++) Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
+  laser.setOffset(0,0);
+  laser.setScale(1.);
+  for (int i = 0;i<count*20;i++) Drawing::drawObject(greg_ok2, sizeof(greg_ok2)/4); 
+  laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count*20;i++) Drawing::drawObject(ildatest_format1, sizeof(ildatest_format1)/4); 
   
 }
 

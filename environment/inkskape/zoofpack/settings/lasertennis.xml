@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>Lasertennis settings</description>
+    <skin filename="./media/white_TTL.ild" />
+    <main pause="p" reset="r" />
+    <left up="s" down="x" serve="c" />
+    <right up="k" down="m" serve="n" />
+</settings>

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>Lasertennis settings</description>
+    <skin filename="C:/Matthijs Local/cpp/laserGl_examples/media/rgb_analog3.lps" />
+    <main pause="p" reset="r" />
+    <left up="s" down="x" serve="c" />
+    <right up="k" down="m" serve="n" />
+</settings>

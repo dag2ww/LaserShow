@@ -14,7 +14,7 @@ MCP4X dac;
 Laser::Laser(int laserPin)
 {
   _laserPin = laserPin;
-  _quality = FROM_FLOAT(1./(LASER_QUALITY));
+  _quality = FROM_FLOAT(1./(laserQuality));
 
   _x = 0;
   _y = 0;
@@ -285,6 +285,11 @@ void Laser::wait(long length)
 void Laser::setScale(float scale)
 { 
   _scale = FROM_FLOAT(scale);
+}
+
+void Laser::setLaserQuality(int quality) {
+ laserQuality = quality;
+ _quality = FROM_FLOAT(1./(laserQuality));
 }
 
 void Laser::setOffset(long offsetX, long offsetY)

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>description</description>
+    <main speed="30000" sx="57" sy="57" lock="1" flipx="0" flipy="0" swapxy="0" brightness="100" moveX="0.000000" moveY="0.000000" keyStoneX="0.000000" keyStoneY="0.000000" skewX="0.000000" skewY="0.000000" />
+    <balance red="100" green="100" blue="100" normalize="50" norm_chk="0" />
+    <redlaser max="255" min="44" blank="20" gamma="1.000000" mute="1" />
+    <greenlaser max="255" min="48" blank="41" gamma="1.140000" mute="1" />
+    <bluelaser max="255" min="59" blank="50" gamma="1.090000" mute="1" />
+    <intensitylaser max="255" min="0" blank="0" gamma="1.000000" mute="1" />
+    <colormapping mapR2R="1.000000" mapG2R="0.000000" mapB2R="0.000000" mapR2G="0.000000" mapG2G="1.000000" mapB2G="0.000000" mapR2B="0.000000" mapG2B="0.000000" mapB2B="1.000000" mapR2I="1.000000" mapG2I="1.000000" mapB2I="1.000000" />
+    <misc colorShift="0" blankThreshold="0" minPntCnt="200" interpolationSpacing="460" interpolateFlag="0" dwellStart="2" dwellEnd="2" dwellBlankStart="2" dwellBlankEnd="2" sortRuns="200" pointPullingFlag="0" pointPullingGain="2.200000" />
+</settings>

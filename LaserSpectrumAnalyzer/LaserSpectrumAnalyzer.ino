@@ -53,7 +53,7 @@ AudioAnalyzeFFT1024      fft1024_1;       //xy=498,64
 AudioConnection          patchCord1(adc1, fft1024_1);
 
 int lastModeButtonValue = HIGH;
-int showMode = 1;
+int showMode = 0;
 const int m_amountOfRows = 256;
 const int m_amountOfColumns = 90; //128;  //Number of outputs per row
 unsigned int logGen1024[m_amountOfColumns][2] = {0}; //Linear1024 -> Log64 mapping
@@ -250,8 +250,10 @@ void initAudio()
 
 #include "Laser.h"
 #include "Drawing.h"
-#include "ocado1.h"
-#include "ocado_groc.h"
+#include "greg_ok2.h"
+#include "greg_ok_opt.h"
+#include "ocado_tech_man.h"
+#include "ildatest_format1.h"
 #include "square_test.h"
 
 // Create laser instance (with laser pointer connected to digital pin 5)
@@ -268,7 +270,7 @@ void handleModeButton(){
   int currentModeButtonValue = digitalRead(2);
    if(currentModeButtonValue != lastModeButtonValue && currentModeButtonValue == LOW){
     ++showMode;
-    if(showMode % 4 == 0){
+    if(showMode % 5 == 0){
       showMode = 1;
     }
   }
@@ -289,7 +291,8 @@ void fftLoop()
 
     if (showMode == 1) 
     { 
-      // circle analyzer   
+      // circle analyzer 
+      laser.setLaserQuality(16);  
       m_decay = 0.15;
       int i = 0;
       float firstX;
@@ -310,10 +313,11 @@ void fftLoop()
       laser.sendto(firstX,firstY);
       rotate += 1;
       laser.off();
-    } 
-    if (showMode > 1) 
+    } else 
+    if (showMode == 2 || showMode == 3) 
     {
       // normal analyzer
+      laser.setLaserQuality(16);
       m_decay = 0.8;
       long step = 4096/m_amountOfColumns;
       long pos = 0;
@@ -325,7 +329,7 @@ void fftLoop()
         pos += step;
       }
       laser.off();
-      if ( showMode > 2) 
+      if ( showMode == 3) 
       {
         laser.sendto(0,0);
         laser.on();
@@ -337,6 +341,10 @@ void fftLoop()
         }
         laser.off();
       }
+    } else
+    if(showMode == 4) {
+       laser.setLaserQuality(8);
+       laserShow();
     }
   }
 }
@@ -348,7 +356,8 @@ void laserShow()
   int count = 360/4;
   int angle = 0;
   laser.setScale(0.5);
-  for (int i = 0;i<count;i++) {
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
     Matrix3 world;
     laser.setEnable3D(true);
     world = Matrix3::rotateX(angle % 360);
@@ -364,23 +373,45 @@ void laserShow()
   }
   laser.setEnable3D(false);
 
-    laser.setOffset(100,100);
-      laser.setScale(1);
-for (int i = 0;i<count;i++) {
+  laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(greg_ok2, sizeof(greg_ok2)/4);
+  }
 
-      Drawing::drawObject(ocado_groc, sizeof(ocado_groc)/4);
-}
+   laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(greg_ok_opt, sizeof(greg_ok_opt)/4);
+  }
 
+   laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(ocado_tech_logo_man, sizeof(ocado_tech_logo_man)/4);
+  }
+
+    laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(ildatest_format1, sizeof(ildatest_format1)/4);
+  }
   
   laser.setOffset(1024,1024);
   laser.setScale(0.5);
-  for (int i = 0;i<count;i++) Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(draw_square, sizeof(draw_square)/4); 
+  }
 
   
 }
 
 void loop() {
-  laserShow();
   fftLoop();
 }
 

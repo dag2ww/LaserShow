@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>description</description>
+    <dwell blank_start="1" blank_end="3" start="1" end="1" />
+    <balance dist_line="4500" dist_curve="4500" dist_blank="4000" />
+    <curve curve_factor="1.000000" max_curve_factor="3.300000" curve_power="1.000000" max_curve_power="3.100000" />
+    <filter forw="5" backw="0" precision="70.000000" point_pulling="1.800000" overlap="3" />
+    <sort sort_runs="200" sort_seed="1000" sort_layers="0" sort_revers="0" sort_adaptive="1" />
+</settings>

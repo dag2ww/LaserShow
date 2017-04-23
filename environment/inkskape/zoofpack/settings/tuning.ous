@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>description</description>
+    <main speed="30000" sx="16" sy="16" brightness="100" lock="1" />
+    <balance red="100" green="60" blue="100" normalize="64" norm_chk="1" />
+    <redlaser max="255" min="36" blank="84" gamma="1.190000" mute="1" />
+    <greenlaser max="196" min="53" blank="0" gamma="0.820000" mute="1" />
+    <bluelaser max="255" min="69" blank="52" gamma="0.920000" mute="1" />
+</settings>

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<settings>
+    <description>Laseroids settings</description>
+    <main pause="p" />
+    <left up="w" left="a" right="d" fire="s" hyper="q" />
+    <right up="i" left="j" right="l" fire="k" hyper="u" />
+</settings>
