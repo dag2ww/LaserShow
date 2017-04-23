@@ -253,6 +253,7 @@ void initAudio()
 #include "greg_ok2.h"
 #include "greg_ok_opt.h"
 #include "ocado_tech_man.h"
+#include "ocado_tech_path_svg_inkf1.h"
 #include "ildatest_format1.h"
 #include "square_test.h"
 
@@ -394,6 +395,13 @@ void laserShow()
     Drawing::drawObject(ocado_tech_logo_man, sizeof(ocado_tech_logo_man)/4);
   }
 
+   laser.setOffset(0,0);
+  laser.setScale(0.8);
+  for (int i = 0;i<count && showMode == 4;i++) {
+    handleModeButton();
+    Drawing::drawObject(ocado_text, sizeof(ocado_text)/4);
+  }
+  
     laser.setOffset(0,0);
   laser.setScale(0.8);
   for (int i = 0;i<count && showMode == 4;i++) {
