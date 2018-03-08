@@ -305,11 +305,11 @@ void otherDrawings()
   laser.setScale(0.5);
   for (int i = 0; i<120;i++) Drawing::drawString("OBRAZKI", -w3/2 + SIN((i*4) % 360)/100., COS((i*4) % 360)/100., 1);
   float scale = 0;
-  for (int i = 0;i<200;i++) {
-    laser.setScale(scale);
-    Drawing::drawObject(draw_question, sizeof(draw_question)/4, -centerX, -centerY);
-    scale += 0.02;
-  }
+  //for (int i = 0;i<200;i++) {
+  //  laser.setScale(scale);
+  //  Drawing::drawObject(draw_question, sizeof(draw_question)/4, -centerX, -centerY);
+  //  scale += 0.02;
+  //}
 }
 
 // arduino + heart
@@ -407,7 +407,7 @@ void loop() {
   drawPlane();
   drawLogo();
   drawArduino2DRotate();
-  drawScroller(String("GM WMS RULEZ CHRISTMAS!"),0.5,2048,100);
+  drawScroller(String("GM WMS RULEZ!"),0.5,2048,100);
   drawWeLove();
   whatAbout3D();
   rotateCube(400);
